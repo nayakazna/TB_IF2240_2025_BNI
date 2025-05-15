@@ -1,9 +1,8 @@
-/*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.7.2-MariaDB, for Win64 (AMD64)
+-- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: if2240_bni
+-- Host: localhost    Database: IF2240_BNI
 -- ------------------------------------------------------
--- Server version	11.7.2-MariaDB
+-- Server version	10.11.6-MariaDB-2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,7 +13,59 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `alamat_pasien`
+--
+
+DROP TABLE IF EXISTS `alamat_pasien`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alamat_pasien` (
+  `email` varchar(255) NOT NULL,
+  `provinsi` varchar(100) NOT NULL,
+  `kota` varchar(100) NOT NULL,
+  `jalan` varchar(100) NOT NULL,
+  PRIMARY KEY (`email`,`provinsi`,`kota`,`jalan`),
+  CONSTRAINT `alamat_pasien_ibfk_1` FOREIGN KEY (`email`) REFERENCES `pasien` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alamat_pasien`
+--
+
+LOCK TABLES `alamat_pasien` WRITE;
+/*!40000 ALTER TABLE `alamat_pasien` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alamat_pasien` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `departemen`
+--
+
+DROP TABLE IF EXISTS `departemen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `departemen` (
+  `nama_departemen` varchar(255) NOT NULL,
+  `id_rumah_sakit` int(11) NOT NULL,
+  `gedung` varchar(255) NOT NULL,
+  PRIMARY KEY (`nama_departemen`,`id_rumah_sakit`),
+  KEY `id_rumah_sakit` (`id_rumah_sakit`),
+  CONSTRAINT `departemen_ibfk_1` FOREIGN KEY (`id_rumah_sakit`) REFERENCES `rumah_sakit` (`id_rumah_sakit`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `departemen`
+--
+
+LOCK TABLES `departemen` WRITE;
+/*!40000 ALTER TABLE `departemen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `departemen` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `janji_temu`
@@ -22,7 +73,7 @@
 
 DROP TABLE IF EXISTS `janji_temu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `janji_temu` (
   `id_janji_temu` int(11) NOT NULL AUTO_INCREMENT,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -47,7 +98,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `layanan_medis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `layanan_medis` (
   `id_rumah_sakit` int(11) NOT NULL,
   `id_layanan` int(11) NOT NULL,
@@ -66,12 +117,37 @@ LOCK TABLES `layanan_medis` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `log_layanan`
+--
+
+DROP TABLE IF EXISTS `log_layanan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log_layanan` (
+  `firmware_baymin` int(11) NOT NULL,
+  `waktu_penggunaa` datetime NOT NULL,
+  `jenis_tindakan` varchar(255) NOT NULL,
+  PRIMARY KEY (`firmware_baymin`),
+  CONSTRAINT `log_layanan_ibfk_1` FOREIGN KEY (`firmware_baymin`) REFERENCES `pasien` (`firmware_baymin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log_layanan`
+--
+
+LOCK TABLES `log_layanan` WRITE;
+/*!40000 ALTER TABLE `log_layanan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log_layanan` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `melakukan_janji`
 --
 
 DROP TABLE IF EXISTS `melakukan_janji`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `melakukan_janji` (
   `email_pesan` varchar(255) NOT NULL,
   `id_janji_temu` int(11) NOT NULL,
@@ -98,7 +174,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `obat` (
   `id_obat` int(11) NOT NULL,
   `label` enum('analgesik','antibiotik','obat herbal') NOT NULL,
@@ -116,12 +192,37 @@ LOCK TABLES `obat` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pasien`
+--
+
+DROP TABLE IF EXISTS `pasien`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pasien` (
+  `email` varchar(255) NOT NULL,
+  `firmware_baymin` int(11) NOT NULL,
+  UNIQUE KEY `firmware_baymin` (`firmware_baymin`),
+  KEY `email` (`email`),
+  CONSTRAINT `pasien_ibfk_1` FOREIGN KEY (`email`) REFERENCES `pengguna` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pasien`
+--
+
+LOCK TABLES `pasien` WRITE;
+/*!40000 ALTER TABLE `pasien` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pasien` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pemesanan_layanan`
 --
 
 DROP TABLE IF EXISTS `pemesanan_layanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pemesanan_layanan` (
   `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -153,7 +254,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pemesanan_obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pemesanan_obat` (
   `email` varchar(255) NOT NULL,
   `waktu_pemesanan` datetime NOT NULL,
@@ -179,7 +280,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pemesanan_obat_obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pemesanan_obat_obat` (
   `email` varchar(255) NOT NULL,
   `waktu_pemesanan` datetime NOT NULL,
@@ -207,7 +308,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pengeluaran_resep`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pengeluaran_resep` (
   `id_janji_temu` int(11) NOT NULL,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -228,12 +329,39 @@ LOCK TABLES `pengeluaran_resep` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pengguna`
+--
+
+DROP TABLE IF EXISTS `pengguna`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pengguna` (
+  `email` varchar(255) NOT NULL,
+  `kata_sandi` varchar(255) NOT NULL,
+  `nama_lengkap` varchar(255) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `usia` int(11) NOT NULL,
+  PRIMARY KEY (`email`),
+  CONSTRAINT `chk_email` CHECK (`email` like '%_@__%.__%')
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pengguna`
+--
+
+LOCK TABLES `pengguna` WRITE;
+/*!40000 ALTER TABLE `pengguna` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pengguna` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `resep_obat`
 --
 
 DROP TABLE IF EXISTS `resep_obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resep_obat` (
   `id_obat` int(11) NOT NULL,
   `id_resep` int(11) NOT NULL,
@@ -256,30 +384,109 @@ LOCK TABLES `resep_obat` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table `rumah_sakit`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `rumah_sakit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `email` varchar(255) NOT NULL,
-  `kata_sandi` varchar(255) NOT NULL,
-  `nama_lengkap` varchar(255) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
-  `usia` int(11) NOT NULL,
-  PRIMARY KEY (`email`),
-  CONSTRAINT `chk_email` CHECK (`email` like '%_@__%.__%')
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rumah_sakit` (
+  `id_rumah_sakit` int(11) NOT NULL,
+  `nama_rumah_sakit` varchar(255) NOT NULL,
+  `provinsi` varchar(255) NOT NULL,
+  `kota` varchar(255) NOT NULL,
+  `jalan` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_rumah_sakit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `rumah_sakit`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `rumah_sakit` WRITE;
+/*!40000 ALTER TABLE `rumah_sakit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rumah_sakit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `telepon_pengguna`
+--
+
+DROP TABLE IF EXISTS `telepon_pengguna`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telepon_pengguna` (
+  `email` varchar(255) NOT NULL,
+  `no_telepon` varchar(255) NOT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `no_telepon` (`no_telepon`),
+  CONSTRAINT `telepon_pengguna_ibfk_1` FOREIGN KEY (`email`) REFERENCES `pengguna` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `telepon_pengguna`
+--
+
+LOCK TABLES `telepon_pengguna` WRITE;
+/*!40000 ALTER TABLE `telepon_pengguna` DISABLE KEYS */;
+/*!40000 ALTER TABLE `telepon_pengguna` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `telepon_rumah_sakit`
+--
+
+DROP TABLE IF EXISTS `telepon_rumah_sakit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telepon_rumah_sakit` (
+  `id_rumah_sakit` int(11) NOT NULL,
+  `no_telepon` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_rumah_sakit`,`no_telepon`),
+  UNIQUE KEY `no_telepon` (`no_telepon`),
+  CONSTRAINT `telepon_rumah_sakit_ibfk_1` FOREIGN KEY (`id_rumah_sakit`) REFERENCES `rumah_sakit` (`id_rumah_sakit`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `telepon_rumah_sakit`
+--
+
+LOCK TABLES `telepon_rumah_sakit` WRITE;
+/*!40000 ALTER TABLE `telepon_rumah_sakit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `telepon_rumah_sakit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tenaga_medis`
+--
+
+DROP TABLE IF EXISTS `tenaga_medis`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tenaga_medis` (
+  `email` varchar(255) NOT NULL,
+  `nama_departemen` varchar(255) NOT NULL,
+  `id_rumah_sakit` int(11) NOT NULL,
+  `NIKes` varchar(255) NOT NULL,
+  `jenis_profesi` varchar(255) NOT NULL,
+  PRIMARY KEY (`email`,`NIKes`),
+  UNIQUE KEY `NIKes` (`NIKes`),
+  KEY `nama_departemen` (`nama_departemen`,`id_rumah_sakit`),
+  CONSTRAINT `tenaga_medis_ibfk_1` FOREIGN KEY (`email`) REFERENCES `pengguna` (`email`),
+  CONSTRAINT `tenaga_medis_ibfk_2` FOREIGN KEY (`nama_departemen`, `id_rumah_sakit`) REFERENCES `departemen` (`nama_departemen`, `id_rumah_sakit`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tenaga_medis`
+--
+
+LOCK TABLES `tenaga_medis` WRITE;
+/*!40000 ALTER TABLE `tenaga_medis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tenaga_medis` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -289,6 +496,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-15  0:10:35
+-- Dump completed on 2025-05-15  8:30:13
