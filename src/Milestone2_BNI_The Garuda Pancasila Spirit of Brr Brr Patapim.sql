@@ -112,7 +112,7 @@ CREATE TABLE `log_layanan` (
   `firmware_baymin` int(11) NOT NULL,
   `waktu_pengguna` datetime NOT NULL,
   `jenis_tindakan` varchar(255) NOT NULL,
-  PRIMARY KEY (`firmware_baymin`),
+  PRIMARY KEY (`firmware_baymin`, `waktu_pengguna`),
   CONSTRAINT `log_layanan_ibfk_1` FOREIGN KEY (`firmware_baymin`) REFERENCES `pasien` (`firmware_baymin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
