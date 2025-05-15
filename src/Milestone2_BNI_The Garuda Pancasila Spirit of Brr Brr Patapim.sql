@@ -43,7 +43,7 @@ CREATE TABLE `pengguna` (
 
 --
 -- Dumping data for table `pengguna`
---
+--te
 
 LOCK TABLES `pengguna` WRITE;
 /*!40000 ALTER TABLE `pengguna` DISABLE KEYS */;
@@ -491,7 +491,7 @@ DROP TABLE IF EXISTS `telepon_pengguna`;
 CREATE TABLE `telepon_pengguna` (
   `email` varchar(255) NOT NULL,
   `no_telepon` varchar(255) NOT NULL,
-  PRIMARY KEY (`email`),
+  PRIMARY KEY (`email`, `no_telepon`),
   UNIQUE KEY `no_telepon` (`no_telepon`),
   CONSTRAINT `telepon_pengguna_ibfk_1` FOREIGN KEY (`email`) REFERENCES `pengguna` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
