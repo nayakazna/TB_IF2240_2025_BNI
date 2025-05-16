@@ -20,7 +20,7 @@ def connect_db():
         print(f"Error connecting to MariaDB: {err}")
         return None
 
-def seed_pengguna(cursor, count=20):
+def seed_pengguna(cursor, count=40):
     emails = []
     for _ in range(count):
         email = fake.unique.email()
@@ -38,7 +38,7 @@ def seed_pengguna(cursor, count=20):
             print(f"Error seeding pengguna: {err} for email {email}")
     return emails
 
-def seed_pasien(cursor, pengguna_emails, count=10):
+def seed_pasien(cursor, pengguna_emails, count=20):
     pasien_data = []
     if not pengguna_emails:
         return pasien_data
