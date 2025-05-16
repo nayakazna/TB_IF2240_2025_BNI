@@ -20,7 +20,7 @@ def connect_db():
         print(f"Error connecting to MariaDB: {err}")
         return None
 
-def seed_pengguna(cursor, count=100):
+def seed_pengguna(cursor, count=150):
     emails = []
     for _ in range(count):
         email = fake.unique.email()
@@ -139,7 +139,7 @@ def seed_departemen(cursor, rumah_sakit_ids, count_per_rs=2, count=50):
     
     nama_departemen_options = ["Kardiologi", "Neurologi", "Umum", "Anak", "Bedah", "Gigi", "Kulit"]
     for rs_id in rumah_sakit_ids:
-        selected_options = random.sample(nama_departemen_options, min(count_per_rs, len(nama_departemen_options)))
+        selected_options = random.sample(nama_departemen_options, count_per_rs)
         for nama_dept in selected_options:
             gedung = f"Gedung {random.choice(['A', 'B', 'C', 'Utama', 'Timur'])}"
             try:
@@ -151,7 +151,7 @@ def seed_departemen(cursor, rumah_sakit_ids, count_per_rs=2, count=50):
             except mysql.connector.Error as err:
                 print(f"Error seeding departemen: {err} for rs_id {rs_id}, dept {nama_dept}")
 
-    for _ in range(count - len(rumah_sakit_ids)):
+    for _ in range(count - len(rumah_sakit_ids)*count_per_rs):
         available_deparatemen = []
 
         while len(available_deparatemen) < 1:
@@ -221,21 +221,23 @@ def seed_melakukan_janji(cursor, pasien_emails, tenaga_medis_emails, janji_temu_
     if not pasien_emails or not tenaga_medis_emails or not janji_temu_data:
         return
     
-    for _ in range(min(count, len(janji_temu_data))):
+    for _ in range(count):
         email_pasien = random.choice(pasien_emails)
         email_tenaga_medis = random.choice(tenaga_medis_emails)
         janji = random.choice(janji_temu_data)
-        try:
-            cursor.execute("""
-                INSERT INTO melakukan_janji (email_pasien, id_janji_temu, email_tenaga_medis, id_rumah_sakit)
-                VALUES (%s, %s, %s, %s)
-            """, (email_pasien, janji['id_janji_temu'], email_tenaga_medis, janji['id_rumah_sakit']))
-        except mysql.connector.Error as err:
-            # Handle potential duplicate PKs by skipping
-            if err.errno == 1062: # Duplicate entry
-                print(f"Skipping duplicate melakukan_janji for PK ({email_pasien}, {janji['id_janji_temu']}, {email_tenaga_medis}, {janji['id_rumah_sakit']})")
-            else:
-                print(f"Error seeding melakukan_janji: {err}")
+        while True:
+            try:
+                cursor.execute("""
+                    INSERT INTO melakukan_janji (email_pasien, id_janji_temu, email_tenaga_medis, id_rumah_sakit)
+                    VALUES (%s, %s, %s, %s)
+                """, (email_pasien, janji['id_janji_temu'], email_tenaga_medis, janji['id_rumah_sakit']))
+                break
+            except mysql.connector.Error as err:
+                # Handle potential duplicate PKs by skipping
+                if err.errno == 1062: # Duplicate entry
+                    print(f"Skipping duplicate melakukan_janji for PK ({email_pasien}, {janji['id_janji_temu']}, {email_tenaga_medis}, {janji['id_rumah_sakit']})")
+                else:
+                    print(f"Error seeding melakukan_janji: {err}")
 
 
 def seed_layanan_medis(cursor, rumah_sakit_ids, count_per_rs=2, count = 50):
@@ -343,25 +345,16 @@ def seed_pengeluaran_resep(cursor, janji_temu_data, count=50):
     if not janji_temu_data:
         return pengeluaran_resep_data
 
-    used_janji_temu = set()
 
-    for _ in range(min(count, len(janji_temu_data))):
+    for _ in range(count):
         janji = random.choice(janji_temu_data)
-        janji_pk = (janji['id_janji_temu'], janji['id_rumah_sakit'])
-        
-        if janji_pk in used_janji_temu: # Ensure unique (id_janji_temu, id_rumah_sakit) for resep
-            continue 
-        used_janji_temu.add(janji_pk)
-
         id_resep = fake.unique.random_int(min=1, max=50000)
         try:
             cursor.execute("""
                 INSERT INTO pengeluaran_resep (id_janji_temu, id_rumah_sakit, id_resep)
                 VALUES (%s, %s, %s)
             """, (janji['id_janji_temu'], janji['id_rumah_sakit'], id_resep))
-            pengeluaran_resep_data.append({'id_janji_temu': janji['id_janji_temu'], 
-                                           'id_rumah_sakit': janji['id_rumah_sakit'], 
-                                           'id_resep': id_resep})
+            pengeluaran_resep_data.append({'id_janji_temu': janji['id_janji_temu'], 'id_rumah_sakit': janji['id_rumah_sakit'], 'id_resep': id_resep})
         except mysql.connector.Error as err:
             print(f"Error seeding pengeluaran_resep: {err}")
     return pengeluaran_resep_data
@@ -373,19 +366,21 @@ def seed_resep_obat(cursor, obat_ids, pengeluaran_resep_data, count_per_resep=2,
     
     for resep_info in pengeluaran_resep_data:
         for _ in range(count_per_resep):
-            id_obat = random.choice(obat_ids)
-            dosis = f"{random.randint(1,3)}x sehari {random.randint(1,2)} tablet"
-            cara_pakai = random.choice(["Sebelum makan", "Sesudah makan", "Saat makan"])
-            try:
-                cursor.execute("""
-                    INSERT INTO resep_obat (id_obat, id_resep, dosis, cara_pakai)
-                    VALUES (%s, %s, %s, %s)
-                """, (id_obat, resep_info['id_resep'], dosis, cara_pakai))
-            except mysql.connector.Error as err:
-                if err.errno == 1062: # Duplicate entry for (id_obat, id_resep)
-                    print(f"Skipping duplicate resep_obat for obat {id_obat}, resep {resep_info['id_resep']}")
-                else:
-                    print(f"Error seeding resep_obat: {err}")
+            while True:
+                id_obat = random.choice(obat_ids)
+                dosis = f"{random.randint(1,3)}x sehari {random.randint(1,2)} tablet"
+                cara_pakai = random.choice(["Sebelum makan", "Sesudah makan", "Saat makan"])
+                try:
+                    cursor.execute("""
+                        INSERT INTO resep_obat (id_obat, id_resep, dosis, cara_pakai)
+                        VALUES (%s, %s, %s, %s)
+                    """, (id_obat, resep_info['id_resep'], dosis, cara_pakai))
+                    break
+                except mysql.connector.Error as err:
+                    if err.errno == 1062: # Duplicate entry for (id_obat, id_resep)
+                        print(f"Skipping duplicate resep_obat for obat {id_obat}, resep {resep_info['id_resep']}")
+                    else:
+                        print(f"Error seeding resep_obat: {err}")
 
     for _ in range(count - len(pengeluaran_resep_data) * count_per_resep):
 
@@ -440,34 +435,39 @@ def seed_pemesanan_obat_obat(cursor, pemesanan_obat_pks, obat_ids, count_per_pem
 
     for pk_info in pemesanan_obat_pks:
         for _ in range(count_per_pemesanan):
-            id_obat = random.choice(obat_ids)
+            while True:
+                id_obat = random.choice(obat_ids)
+                try:
+                    cursor.execute("""
+                        INSERT INTO pemesanan_obat_obat (email, waktu_pemesanan, alamat_pengiriman, id_obat)
+                        VALUES (%s, %s, %s, %s)
+                    """, (pk_info['email'], pk_info['waktu_pemesanan'], pk_info['alamat_pengiriman'], id_obat))
+                    break
+                except mysql.connector.Error as err:
+                    if err.errno == 1062:
+                        print(f"Skipping duplicate pemesanan_obat_obat for PK ({pk_info['email']}, {pk_info['waktu_pemesanan']}, {pk_info['alamat_pengiriman']}, {id_obat})")
+                    else:
+                        print(f"Error seeding pemesanan_obat_obat: {err}")
+                        
+
+    for _ in range(count - len(pemesanan_obat_pks) * count_per_pemesanan):
+        id_obat = random.choice(obat_ids)
+        pk_info = random.choice(pemesanan_obat_pks)
+        while True:
             try:
                 cursor.execute("""
                     INSERT INTO pemesanan_obat_obat (email, waktu_pemesanan, alamat_pengiriman, id_obat)
                     VALUES (%s, %s, %s, %s)
                 """, (pk_info['email'], pk_info['waktu_pemesanan'], pk_info['alamat_pengiriman'], id_obat))
+                break
             except mysql.connector.Error as err:
                 if err.errno == 1062:
                     print(f"Skipping duplicate pemesanan_obat_obat for PK ({pk_info['email']}, {pk_info['waktu_pemesanan']}, {pk_info['alamat_pengiriman']}, {id_obat})")
                 else:
                     print(f"Error seeding pemesanan_obat_obat: {err}")
 
-    for _ in range(count - len(pemesanan_obat_pks) * count_per_pemesanan):
-        id_obat = random.choice(obat_ids)
-        pk_info = random.choice(pemesanan_obat_pks)
-        try:
-            cursor.execute("""
-                INSERT INTO pemesanan_obat_obat (email, waktu_pemesanan, alamat_pengiriman, id_obat)
-                VALUES (%s, %s, %s, %s)
-            """, (pk_info['email'], pk_info['waktu_pemesanan'], pk_info['alamat_pengiriman'], id_obat))
-        except mysql.connector.Error as err:
-            if err.errno == 1062:
-                print(f"Skipping duplicate pemesanan_obat_obat for PK ({pk_info['email']}, {pk_info['waktu_pemesanan']}, {pk_info['alamat_pengiriman']}, {id_obat})")
-            else:
-                print(f"Error seeding pemesanan_obat_obat: {err}")
 
-
-def seed_telepon_pengguna(cursor, pengguna_emails, count = 50):
+def seed_telepon_pengguna(cursor, pengguna_emails, count = 300):
     if not pengguna_emails:
         return
     for email in pengguna_emails:
@@ -496,6 +496,20 @@ def seed_telepon_pengguna(cursor, pengguna_emails, count = 50):
                 print(f"Skipping duplicate telepon_pengguna for PK ({email}, {no_telepon})")
             else:
                 print(f"Error seeding telepon_pengguna: {err} for email {email}")
+
+def print_row_counts(cursor):
+    print("\n--- Jumlah Baris per Tabel ---")
+    try:
+        cursor.execute("SHOW TABLES")
+        tables = [table[0] for table in cursor.fetchall()]
+        for table_name in tables:
+            cursor.execute(f"SELECT COUNT(*) FROM `{table_name}`")
+            count = cursor.fetchone()[0]
+            print(f"Tabel '{table_name}': {count} baris")
+    except mysql.connector.Error as err:
+        print(f"Error saat mengambil jumlah baris: {err}")
+    print("----------------------------\n")
+
 
 if __name__ == '__main__':
     conn = connect_db()
@@ -565,6 +579,9 @@ if __name__ == '__main__':
 
         conn.commit()
         print("Database seeded successfully.")
+
+
+        print_row_counts(cursor)
         cursor.close()
         conn.close()
     else:
