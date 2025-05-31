@@ -1,9 +1,9 @@
-/*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19  Distrib 10.11.11-MariaDB, for debian-linux-gnu (x86_64)
+/*!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19  Distrib 10.11.8-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: Halobot
 -- ------------------------------------------------------
--- Server version	10.11.11-MariaDB-0ubuntu0.24.04.2
+-- Server version	10.11.8-MariaDB-0ubuntu0.24.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,20 +17,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `Halobot`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Halobot` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-
-USE `Halobot`;
-
---
 -- Table structure for table `alamat_pasien`
 --
 
 DROP TABLE IF EXISTS `alamat_pasien`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `alamat_pasien` (
   `email` varchar(255) NOT NULL,
   `provinsi` varchar(100) NOT NULL,
@@ -47,7 +39,8 @@ CREATE TABLE `alamat_pasien` (
 
 LOCK TABLES `alamat_pasien` WRITE;
 /*!40000 ALTER TABLE `alamat_pasien` DISABLE KEYS */;
-INSERT INTO `alamat_pasien` (`email`, `provinsi`, `kota`, `jalan`) VALUES ('bagus17@example.org','Sumatera Utara','Dumai','Gg. Gedebage Selatan No. 14'),
+INSERT INTO `alamat_pasien` VALUES
+('bagus17@example.org','Sumatera Utara','Dumai','Gg. Gedebage Selatan No. 14'),
 ('baktionopalastri@example.net','Banten','Bau-Bau','Gg. Pacuan Kuda No. 9'),
 ('baktionopalastri@example.net','Jawa Tengah','Magelang','Jalan S. Parman No. 62'),
 ('baktionopalastri@example.net','Kepulauan Bangka Belitung','Bandar Lampung','Jl. Dipenogoro No. 4'),
@@ -156,7 +149,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `departemen`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `departemen` (
   `nama_departemen` varchar(255) NOT NULL,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -173,7 +166,8 @@ CREATE TABLE `departemen` (
 
 LOCK TABLES `departemen` WRITE;
 /*!40000 ALTER TABLE `departemen` DISABLE KEYS */;
-INSERT INTO `departemen` (`nama_departemen`, `id_rumah_sakit`, `gedung`) VALUES ('Anak',60,'Gedung B'),
+INSERT INTO `departemen` VALUES
+('Anak',60,'Gedung B'),
 ('Anak',267,'Gedung Timur'),
 ('Anak',345,'Gedung B'),
 ('Anak',428,'Gedung Utama'),
@@ -232,7 +226,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `janji_temu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `janji_temu` (
   `id_janji_temu` int(11) NOT NULL AUTO_INCREMENT,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -250,7 +244,8 @@ CREATE TABLE `janji_temu` (
 
 LOCK TABLES `janji_temu` WRITE;
 /*!40000 ALTER TABLE `janji_temu` DISABLE KEYS */;
-INSERT INTO `janji_temu` (`id_janji_temu`, `id_rumah_sakit`, `waktu_pelaksanaan`, `alasan`) VALUES (1,698,'2025-06-12 23:16:24','Vero facilis minus voluptatum blanditiis reiciendis necessitatibus optio.'),
+INSERT INTO `janji_temu` VALUES
+(1,698,'2025-06-12 23:16:24','Vero facilis minus voluptatum blanditiis reiciendis necessitatibus optio.'),
 (2,791,'2025-04-30 05:14:58','Dolore consequatur itaque tempore provident soluta nobis at alias quidem minus sequi optio.'),
 (3,432,'2025-05-25 19:25:24','Voluptates necessitatibus deleniti est debitis praesentium autem accusantium culpa ad.'),
 (4,757,'2025-05-08 00:58:56','Laborum ex nobis sequi neque hic ab quidem voluptatum optio nihil necessitatibus.'),
@@ -309,7 +304,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `layanan_medis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `layanan_medis` (
   `id_rumah_sakit` int(11) NOT NULL,
   `id_layanan` int(11) NOT NULL,
@@ -325,7 +320,8 @@ CREATE TABLE `layanan_medis` (
 
 LOCK TABLES `layanan_medis` WRITE;
 /*!40000 ALTER TABLE `layanan_medis` DISABLE KEYS */;
-INSERT INTO `layanan_medis` (`id_rumah_sakit`, `id_layanan`, `nama_layanan`) VALUES (60,37,'vaksinasi'),
+INSERT INTO `layanan_medis` VALUES
+(60,37,'vaksinasi'),
 (60,38,'fisioterapi'),
 (198,11,'fisioterapi'),
 (198,12,'vaksinasi'),
@@ -384,7 +380,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `log_layanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `log_layanan` (
   `firmware_baymin` int(11) NOT NULL,
   `waktu_pengguna` datetime NOT NULL,
@@ -400,7 +396,8 @@ CREATE TABLE `log_layanan` (
 
 LOCK TABLES `log_layanan` WRITE;
 /*!40000 ALTER TABLE `log_layanan` DISABLE KEYS */;
-INSERT INTO `log_layanan` (`firmware_baymin`, `waktu_pengguna`, `jenis_tindakan`) VALUES (11796,'2025-03-22 01:20:59','revolutionize 24/7 relationships'),
+INSERT INTO `log_layanan` VALUES
+(11796,'2025-03-22 01:20:59','revolutionize 24/7 relationships'),
 (11796,'2025-04-12 04:06:59','syndicate magnetic e-services'),
 (11796,'2025-04-12 22:52:01','engage scalable communities'),
 (11796,'2025-04-22 12:18:34','enhance granular functionalities'),
@@ -509,7 +506,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `melakukan_janji`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `melakukan_janji` (
   `email_pasien` varchar(255) NOT NULL,
   `id_janji_temu` int(11) NOT NULL,
@@ -530,7 +527,8 @@ CREATE TABLE `melakukan_janji` (
 
 LOCK TABLES `melakukan_janji` WRITE;
 /*!40000 ALTER TABLE `melakukan_janji` DISABLE KEYS */;
-INSERT INTO `melakukan_janji` (`email_pasien`, `id_janji_temu`, `email_tenaga_medis`, `id_rumah_sakit`) VALUES ('bagus17@example.org',21,'putraibrani@example.com',267),
+INSERT INTO `melakukan_janji` VALUES
+('bagus17@example.org',21,'putraibrani@example.com',267),
 ('bagus17@example.org',28,'irfanpuspita@example.org',345),
 ('bagus17@example.org',32,'jonogunawan@example.net',791),
 ('bagus17@example.org',49,'suciyulianti@example.org',514),
@@ -689,10 +687,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `obat` (
   `id_obat` int(11) NOT NULL,
   `label` enum('analgesik','antibiotik','obat herbal') NOT NULL,
+  `stok_obat` int(11) NOT NULL DEFAULT 50 CHECK (`stok_obat` >= 0),
   PRIMARY KEY (`id_obat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -703,26 +702,27 @@ CREATE TABLE `obat` (
 
 LOCK TABLES `obat` WRITE;
 /*!40000 ALTER TABLE `obat` DISABLE KEYS */;
-INSERT INTO `obat` (`id_obat`, `label`) VALUES (165,'obat herbal'),
-(225,'antibiotik'),
-(711,'analgesik'),
-(1563,'antibiotik'),
-(1955,'analgesik'),
-(2266,'analgesik'),
-(3447,'antibiotik'),
-(3940,'obat herbal'),
-(4704,'antibiotik'),
-(4920,'antibiotik'),
-(4947,'obat herbal'),
-(5030,'obat herbal'),
-(5342,'antibiotik'),
-(5459,'obat herbal'),
-(5648,'antibiotik'),
-(5893,'antibiotik'),
-(6992,'analgesik'),
-(8925,'antibiotik'),
-(9482,'analgesik'),
-(9948,'antibiotik');
+INSERT INTO `obat` VALUES
+(165,'obat herbal',50),
+(225,'antibiotik',48),
+(711,'analgesik',50),
+(1563,'antibiotik',50),
+(1955,'analgesik',50),
+(2266,'analgesik',50),
+(3447,'antibiotik',50),
+(3940,'obat herbal',50),
+(4704,'antibiotik',50),
+(4920,'antibiotik',49),
+(4947,'obat herbal',50),
+(5030,'obat herbal',50),
+(5342,'antibiotik',50),
+(5459,'obat herbal',50),
+(5648,'antibiotik',50),
+(5893,'antibiotik',50),
+(6992,'analgesik',50),
+(8925,'antibiotik',50),
+(9482,'analgesik',50),
+(9948,'antibiotik',50);
 /*!40000 ALTER TABLE `obat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -732,7 +732,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasien`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pasien` (
   `email` varchar(255) NOT NULL,
   `firmware_baymin` int(11) NOT NULL,
@@ -748,7 +748,8 @@ CREATE TABLE `pasien` (
 
 LOCK TABLES `pasien` WRITE;
 /*!40000 ALTER TABLE `pasien` DISABLE KEYS */;
-INSERT INTO `pasien` (`email`, `firmware_baymin`) VALUES ('bagus17@example.org',21078),
+INSERT INTO `pasien` VALUES
+('bagus17@example.org',21078),
 ('baktionopalastri@example.net',25445),
 ('budiyantoraharja@example.org',98740),
 ('cager91@example.org',18829),
@@ -807,7 +808,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pemesanan_layanan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pemesanan_layanan` (
   `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -831,7 +832,8 @@ CREATE TABLE `pemesanan_layanan` (
 
 LOCK TABLES `pemesanan_layanan` WRITE;
 /*!40000 ALTER TABLE `pemesanan_layanan` DISABLE KEYS */;
-INSERT INTO `pemesanan_layanan` (`id_pemesanan`, `id_rumah_sakit`, `id_layanan`, `email`, `jenis_layanan`, `jadwal_pelaksanaan`, `status_pemesanan`, `total_biaya`) VALUES (1,432,1,'sihombingqueen@example.org','konsultasi dokter','2025-06-02','selesai',694767),
+INSERT INTO `pemesanan_layanan` VALUES
+(1,432,1,'sihombingqueen@example.org','konsultasi dokter','2025-06-02','selesai',694767),
 (2,576,32,'kpurwanti@example.org','tes radiologi','2025-05-17','selesai',597302),
 (3,757,20,'baktionopalastri@example.net','tes laboratorium','2025-06-20','dijadwalkan',729995),
 (4,766,27,'lantarwaluyo@example.org','home care','2025-07-12','dijadwalkan',858089),
@@ -940,7 +942,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pemesanan_obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pemesanan_obat` (
   `email` varchar(255) NOT NULL,
   `waktu_pemesanan` datetime NOT NULL,
@@ -958,7 +960,8 @@ CREATE TABLE `pemesanan_obat` (
 
 LOCK TABLES `pemesanan_obat` WRITE;
 /*!40000 ALTER TABLE `pemesanan_obat` DISABLE KEYS */;
-INSERT INTO `pemesanan_obat` (`email`, `waktu_pemesanan`, `alamat_pengiriman`, `status_pemesanan`, `total_biaya`) VALUES ('bagus17@example.org','2025-05-06 06:50:07','Gg. Dipatiukur No. 117, Pariaman, Jawa Timur 06545','dijadwalkan',371725),
+INSERT INTO `pemesanan_obat` VALUES
+('bagus17@example.org','2025-05-06 06:50:07','Gg. Dipatiukur No. 117, Pariaman, Jawa Timur 06545','dijadwalkan',371725),
 ('budiyantoraharja@example.org','2025-05-03 20:46:43','Jl. Sadang Serang No. 337, Tanjungpinang, SS 07538','selesai',296032),
 ('cager91@example.org','2025-05-10 18:40:04','Gang Rajawali Barat No. 943, Probolinggo, KT 70552','selesai',56579),
 ('capanurdiyanti@example.net','2025-05-09 04:32:56','Gang Pacuan Kuda No. 5, Purwokerto, JB 83652','dijadwalkan',72395),
@@ -1017,7 +1020,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pemesanan_obat_obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pemesanan_obat_obat` (
   `email` varchar(255) NOT NULL,
   `waktu_pemesanan` datetime NOT NULL,
@@ -1036,7 +1039,8 @@ CREATE TABLE `pemesanan_obat_obat` (
 
 LOCK TABLES `pemesanan_obat_obat` WRITE;
 /*!40000 ALTER TABLE `pemesanan_obat_obat` DISABLE KEYS */;
-INSERT INTO `pemesanan_obat_obat` (`email`, `waktu_pemesanan`, `alamat_pengiriman`, `id_obat`) VALUES ('bagus17@example.org','2025-05-06 06:50:07','Gg. Dipatiukur No. 117, Pariaman, Jawa Timur 06545',3940),
+INSERT INTO `pemesanan_obat_obat` VALUES
+('bagus17@example.org','2025-05-06 06:50:07','Gg. Dipatiukur No. 117, Pariaman, Jawa Timur 06545',3940),
 ('bagus17@example.org','2025-05-06 06:50:07','Gg. Dipatiukur No. 117, Pariaman, Jawa Timur 06545',9482),
 ('budiyantoraharja@example.org','2025-05-03 20:46:43','Jl. Sadang Serang No. 337, Tanjungpinang, SS 07538',5030),
 ('budiyantoraharja@example.org','2025-05-03 20:46:43','Jl. Sadang Serang No. 337, Tanjungpinang, SS 07538',5893),
@@ -1145,7 +1149,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pengeluaran_resep`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pengeluaran_resep` (
   `id_janji_temu` int(11) NOT NULL,
   `id_rumah_sakit` int(11) NOT NULL,
@@ -1162,7 +1166,8 @@ CREATE TABLE `pengeluaran_resep` (
 
 LOCK TABLES `pengeluaran_resep` WRITE;
 /*!40000 ALTER TABLE `pengeluaran_resep` DISABLE KEYS */;
-INSERT INTO `pengeluaran_resep` (`id_janji_temu`, `id_rumah_sakit`, `id_resep`) VALUES (2,791,27201),
+INSERT INTO `pengeluaran_resep` VALUES
+(2,791,27201),
 (3,432,19700),
 (3,432,27563),
 (3,432,45958),
@@ -1221,7 +1226,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pengguna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pengguna` (
   `email` varchar(255) NOT NULL,
   `kata_sandi` varchar(255) NOT NULL,
@@ -1239,7 +1244,8 @@ CREATE TABLE `pengguna` (
 
 LOCK TABLES `pengguna` WRITE;
 /*!40000 ALTER TABLE `pengguna` DISABLE KEYS */;
-INSERT INTO `pengguna` (`email`, `kata_sandi`, `nama_lengkap`, `tanggal_lahir`, `usia`) VALUES ('adiarja64@example.org','ETcjzwiNI@0D','Dadap Mardhiyah','1998-04-13',27),
+INSERT INTO `pengguna` VALUES
+('adiarja64@example.org','ETcjzwiNI@0D','Dadap Mardhiyah','1998-04-13',27),
 ('akarsanairawan@example.org','b6WFvuI1)eF5','Dr. Ani Mahendra, M.TI.','1969-06-23',55),
 ('asirwanda75@example.com','p0Pfuv89@l_K','Cut Hamima Mangunsong','1979-03-02',46),
 ('asmuni43@example.net','536LadJs)BDF','Ismail Prasetyo','1957-06-01',68),
@@ -1398,12 +1404,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `resep_obat`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resep_obat` (
   `id_obat` int(11) NOT NULL,
   `id_resep` int(11) NOT NULL,
   `dosis` varchar(255) DEFAULT NULL,
   `cara_pakai` varchar(255) NOT NULL,
+  `kuantitas` int(11) NOT NULL DEFAULT 1 CHECK (`kuantitas` > 0),
   PRIMARY KEY (`id_obat`,`id_resep`),
   KEY `id_resep` (`id_resep`),
   CONSTRAINT `resep_obat_ibfk_1` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id_obat`),
@@ -1417,106 +1424,107 @@ CREATE TABLE `resep_obat` (
 
 LOCK TABLES `resep_obat` WRITE;
 /*!40000 ALTER TABLE `resep_obat` DISABLE KEYS */;
-INSERT INTO `resep_obat` (`id_obat`, `id_resep`, `dosis`, `cara_pakai`) VALUES (165,33443,'3x sehari 2 tablet','Saat makan'),
-(165,45958,'1x sehari 2 tablet','Sebelum makan'),
-(225,10582,'3x sehari 2 tablet','Sesudah makan'),
-(225,10972,'2x sehari 1 tablet','Saat makan'),
-(225,18579,'2x sehari 2 tablet','Saat makan'),
-(225,23445,'1x sehari 1 tablet','Saat makan'),
-(225,24825,'2x sehari 2 tablet','Saat makan'),
-(225,27201,'3x sehari 2 tablet','Sebelum makan'),
-(225,32307,'3x sehari 2 tablet','Saat makan'),
-(711,6706,'1x sehari 2 tablet','Sebelum makan'),
-(711,8914,'3x sehari 2 tablet','Saat makan'),
-(711,15428,'3x sehari 2 tablet','Sebelum makan'),
-(711,18579,'2x sehari 2 tablet','Sesudah makan'),
-(711,19700,'2x sehari 2 tablet','Saat makan'),
-(711,30025,'2x sehari 2 tablet','Saat makan'),
-(711,38414,'2x sehari 1 tablet','Saat makan'),
-(711,38491,'1x sehari 1 tablet','Saat makan'),
-(711,48117,'2x sehari 1 tablet','Saat makan'),
-(1563,13241,'1x sehari 2 tablet','Sebelum makan'),
-(1563,15489,'1x sehari 2 tablet','Sebelum makan'),
-(1563,17297,'1x sehari 2 tablet','Sebelum makan'),
-(1563,27201,'1x sehari 1 tablet','Sebelum makan'),
-(1563,27563,'1x sehari 1 tablet','Saat makan'),
-(1563,33443,'1x sehari 2 tablet','Sesudah makan'),
-(1955,6346,'3x sehari 1 tablet','Saat makan'),
-(1955,34507,'2x sehari 1 tablet','Saat makan'),
-(2266,703,'3x sehari 2 tablet','Sebelum makan'),
-(2266,15489,'2x sehari 1 tablet','Saat makan'),
-(2266,34072,'3x sehari 2 tablet','Sesudah makan'),
-(2266,41544,'1x sehari 1 tablet','Sebelum makan'),
-(2266,42398,'2x sehari 2 tablet','Sesudah makan'),
-(3447,3042,'2x sehari 2 tablet','Saat makan'),
-(3447,30046,'2x sehari 2 tablet','Sesudah makan'),
-(3447,30997,'3x sehari 1 tablet','Sebelum makan'),
-(3940,20725,'3x sehari 1 tablet','Sesudah makan'),
-(3940,34072,'1x sehari 2 tablet','Sebelum makan'),
-(3940,41182,'2x sehari 2 tablet','Saat makan'),
-(4704,13241,'2x sehari 1 tablet','Sesudah makan'),
-(4704,34507,'3x sehari 2 tablet','Sesudah makan'),
-(4920,3230,'1x sehari 2 tablet','Sebelum makan'),
-(4920,6706,'1x sehari 1 tablet','Saat makan'),
-(4920,10972,'3x sehari 2 tablet','Sebelum makan'),
-(4920,15056,'1x sehari 2 tablet','Saat makan'),
-(4920,20725,'1x sehari 2 tablet','Sebelum makan'),
-(4920,28277,'3x sehari 2 tablet','Sesudah makan'),
-(4920,42134,'3x sehari 1 tablet','Sebelum makan'),
-(4947,20553,'3x sehari 2 tablet','Saat makan'),
-(4947,21780,'3x sehari 2 tablet','Saat makan'),
-(4947,30025,'1x sehari 1 tablet','Sebelum makan'),
-(4947,46741,'3x sehari 2 tablet','Saat makan'),
-(4947,46756,'3x sehari 2 tablet','Sesudah makan'),
-(5030,19313,'1x sehari 2 tablet','Saat makan'),
-(5030,23058,'2x sehari 2 tablet','Sesudah makan'),
-(5030,41544,'3x sehari 2 tablet','Sebelum makan'),
-(5030,44589,'2x sehari 2 tablet','Sebelum makan'),
-(5342,3230,'3x sehari 2 tablet','Sesudah makan'),
-(5459,8837,'1x sehari 2 tablet','Sebelum makan'),
-(5459,8914,'1x sehari 2 tablet','Saat makan'),
-(5459,10582,'1x sehari 2 tablet','Saat makan'),
-(5459,16191,'3x sehari 2 tablet','Saat makan'),
-(5459,16999,'1x sehari 1 tablet','Sesudah makan'),
-(5459,23445,'3x sehari 1 tablet','Sebelum makan'),
-(5459,46741,'2x sehari 2 tablet','Sebelum makan'),
-(5648,703,'1x sehari 1 tablet','Sesudah makan'),
-(5648,8837,'3x sehari 1 tablet','Sesudah makan'),
-(5648,27906,'2x sehari 1 tablet','Saat makan'),
-(5648,30997,'1x sehari 2 tablet','Sesudah makan'),
-(5648,38491,'2x sehari 2 tablet','Sesudah makan'),
-(5893,3042,'2x sehari 2 tablet','Saat makan'),
-(5893,6346,'1x sehari 1 tablet','Sesudah makan'),
-(5893,15281,'3x sehari 2 tablet','Sesudah makan'),
-(5893,19700,'3x sehari 2 tablet','Sebelum makan'),
-(5893,24825,'1x sehari 2 tablet','Sebelum makan'),
-(6992,15056,'1x sehari 1 tablet','Saat makan'),
-(6992,15428,'1x sehari 2 tablet','Sebelum makan'),
-(6992,16191,'1x sehari 2 tablet','Sesudah makan'),
-(6992,19313,'2x sehari 1 tablet','Saat makan'),
-(6992,30046,'1x sehari 1 tablet','Sebelum makan'),
-(6992,42398,'3x sehari 2 tablet','Sebelum makan'),
-(6992,44589,'1x sehari 1 tablet','Sebelum makan'),
-(6992,48117,'1x sehari 1 tablet','Sesudah makan'),
-(8925,16999,'1x sehari 2 tablet','Sebelum makan'),
-(8925,27563,'3x sehari 2 tablet','Sesudah makan'),
-(8925,28277,'1x sehari 2 tablet','Sebelum makan'),
-(8925,32307,'3x sehari 2 tablet','Saat makan'),
-(8925,41182,'1x sehari 1 tablet','Sesudah makan'),
-(8925,46756,'3x sehari 1 tablet','Saat makan'),
-(9482,15281,'2x sehari 2 tablet','Saat makan'),
-(9482,17297,'1x sehari 1 tablet','Sesudah makan'),
-(9482,20553,'3x sehari 1 tablet','Sesudah makan'),
-(9482,23058,'3x sehari 2 tablet','Sebelum makan'),
-(9482,33385,'2x sehari 1 tablet','Sebelum makan'),
-(9482,38414,'1x sehari 1 tablet','Sebelum makan'),
-(9482,42134,'3x sehari 2 tablet','Sebelum makan'),
-(9482,45958,'1x sehari 2 tablet','Saat makan'),
-(9482,48482,'3x sehari 1 tablet','Sesudah makan'),
-(9948,21780,'3x sehari 2 tablet','Saat makan'),
-(9948,27906,'3x sehari 1 tablet','Sebelum makan'),
-(9948,33385,'3x sehari 1 tablet','Sebelum makan'),
-(9948,48482,'1x sehari 2 tablet','Sebelum makan');
+INSERT INTO `resep_obat` VALUES
+(165,33443,'3x sehari 2 tablet','Saat makan',1),
+(165,45958,'1x sehari 2 tablet','Sebelum makan',1),
+(225,10582,'3x sehari 2 tablet','Sesudah makan',2),
+(225,10972,'2x sehari 1 tablet','Saat makan',2),
+(225,18579,'2x sehari 2 tablet','Saat makan',2),
+(225,23445,'1x sehari 1 tablet','Saat makan',2),
+(225,24825,'2x sehari 2 tablet','Saat makan',2),
+(225,27201,'3x sehari 2 tablet','Sebelum makan',2),
+(225,32307,'3x sehari 2 tablet','Saat makan',2),
+(711,6706,'1x sehari 2 tablet','Sebelum makan',1),
+(711,8914,'3x sehari 2 tablet','Saat makan',1),
+(711,15428,'3x sehari 2 tablet','Sebelum makan',1),
+(711,18579,'2x sehari 2 tablet','Sesudah makan',1),
+(711,19700,'2x sehari 2 tablet','Saat makan',1),
+(711,30025,'2x sehari 2 tablet','Saat makan',1),
+(711,38414,'2x sehari 1 tablet','Saat makan',1),
+(711,38491,'1x sehari 1 tablet','Saat makan',1),
+(711,48117,'2x sehari 1 tablet','Saat makan',1),
+(1563,13241,'1x sehari 2 tablet','Sebelum makan',1),
+(1563,15489,'1x sehari 2 tablet','Sebelum makan',1),
+(1563,17297,'1x sehari 2 tablet','Sebelum makan',1),
+(1563,27201,'1x sehari 1 tablet','Sebelum makan',1),
+(1563,27563,'1x sehari 1 tablet','Saat makan',1),
+(1563,33443,'1x sehari 2 tablet','Sesudah makan',1),
+(1955,6346,'3x sehari 1 tablet','Saat makan',1),
+(1955,34507,'2x sehari 1 tablet','Saat makan',1),
+(2266,703,'3x sehari 2 tablet','Sebelum makan',1),
+(2266,15489,'2x sehari 1 tablet','Saat makan',1),
+(2266,34072,'3x sehari 2 tablet','Sesudah makan',1),
+(2266,41544,'1x sehari 1 tablet','Sebelum makan',1),
+(2266,42398,'2x sehari 2 tablet','Sesudah makan',1),
+(3447,3042,'2x sehari 2 tablet','Saat makan',1),
+(3447,30046,'2x sehari 2 tablet','Sesudah makan',1),
+(3447,30997,'3x sehari 1 tablet','Sebelum makan',1),
+(3940,20725,'3x sehari 1 tablet','Sesudah makan',1),
+(3940,34072,'1x sehari 2 tablet','Sebelum makan',1),
+(3940,41182,'2x sehari 2 tablet','Saat makan',1),
+(4704,13241,'2x sehari 1 tablet','Sesudah makan',1),
+(4704,34507,'3x sehari 2 tablet','Sesudah makan',1),
+(4920,3230,'1x sehari 2 tablet','Sebelum makan',1),
+(4920,6706,'1x sehari 1 tablet','Saat makan',1),
+(4920,10972,'3x sehari 2 tablet','Sebelum makan',1),
+(4920,15056,'1x sehari 2 tablet','Saat makan',1),
+(4920,20725,'1x sehari 2 tablet','Sebelum makan',1),
+(4920,28277,'3x sehari 2 tablet','Sesudah makan',1),
+(4920,42134,'3x sehari 1 tablet','Sebelum makan',1),
+(4947,20553,'3x sehari 2 tablet','Saat makan',1),
+(4947,21780,'3x sehari 2 tablet','Saat makan',1),
+(4947,30025,'1x sehari 1 tablet','Sebelum makan',1),
+(4947,46741,'3x sehari 2 tablet','Saat makan',1),
+(4947,46756,'3x sehari 2 tablet','Sesudah makan',1),
+(5030,19313,'1x sehari 2 tablet','Saat makan',1),
+(5030,23058,'2x sehari 2 tablet','Sesudah makan',1),
+(5030,41544,'3x sehari 2 tablet','Sebelum makan',1),
+(5030,44589,'2x sehari 2 tablet','Sebelum makan',1),
+(5342,3230,'3x sehari 2 tablet','Sesudah makan',1),
+(5459,8837,'1x sehari 2 tablet','Sebelum makan',1),
+(5459,8914,'1x sehari 2 tablet','Saat makan',1),
+(5459,10582,'1x sehari 2 tablet','Saat makan',1),
+(5459,16191,'3x sehari 2 tablet','Saat makan',1),
+(5459,16999,'1x sehari 1 tablet','Sesudah makan',1),
+(5459,23445,'3x sehari 1 tablet','Sebelum makan',1),
+(5459,46741,'2x sehari 2 tablet','Sebelum makan',1),
+(5648,703,'1x sehari 1 tablet','Sesudah makan',1),
+(5648,8837,'3x sehari 1 tablet','Sesudah makan',1),
+(5648,27906,'2x sehari 1 tablet','Saat makan',1),
+(5648,30997,'1x sehari 2 tablet','Sesudah makan',1),
+(5648,38491,'2x sehari 2 tablet','Sesudah makan',1),
+(5893,3042,'2x sehari 2 tablet','Saat makan',1),
+(5893,6346,'1x sehari 1 tablet','Sesudah makan',1),
+(5893,15281,'3x sehari 2 tablet','Sesudah makan',1),
+(5893,19700,'3x sehari 2 tablet','Sebelum makan',1),
+(5893,24825,'1x sehari 2 tablet','Sebelum makan',1),
+(6992,15056,'1x sehari 1 tablet','Saat makan',1),
+(6992,15428,'1x sehari 2 tablet','Sebelum makan',1),
+(6992,16191,'1x sehari 2 tablet','Sesudah makan',1),
+(6992,19313,'2x sehari 1 tablet','Saat makan',1),
+(6992,30046,'1x sehari 1 tablet','Sebelum makan',1),
+(6992,42398,'3x sehari 2 tablet','Sebelum makan',1),
+(6992,44589,'1x sehari 1 tablet','Sebelum makan',1),
+(6992,48117,'1x sehari 1 tablet','Sesudah makan',1),
+(8925,16999,'1x sehari 2 tablet','Sebelum makan',1),
+(8925,27563,'3x sehari 2 tablet','Sesudah makan',1),
+(8925,28277,'1x sehari 2 tablet','Sebelum makan',1),
+(8925,32307,'3x sehari 2 tablet','Saat makan',1),
+(8925,41182,'1x sehari 1 tablet','Sesudah makan',1),
+(8925,46756,'3x sehari 1 tablet','Saat makan',1),
+(9482,15281,'2x sehari 2 tablet','Saat makan',1),
+(9482,17297,'1x sehari 1 tablet','Sesudah makan',1),
+(9482,20553,'3x sehari 1 tablet','Sesudah makan',1),
+(9482,23058,'3x sehari 2 tablet','Sebelum makan',1),
+(9482,33385,'2x sehari 1 tablet','Sebelum makan',1),
+(9482,38414,'1x sehari 1 tablet','Sebelum makan',1),
+(9482,42134,'3x sehari 2 tablet','Sebelum makan',1),
+(9482,45958,'1x sehari 2 tablet','Saat makan',1),
+(9482,48482,'3x sehari 1 tablet','Sesudah makan',1),
+(9948,21780,'3x sehari 2 tablet','Saat makan',1),
+(9948,27906,'3x sehari 1 tablet','Sebelum makan',1),
+(9948,33385,'3x sehari 1 tablet','Sebelum makan',1),
+(9948,48482,'1x sehari 2 tablet','Sebelum makan',1);
 /*!40000 ALTER TABLE `resep_obat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1526,7 +1534,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `rumah_sakit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rumah_sakit` (
   `id_rumah_sakit` int(11) NOT NULL,
   `nama_rumah_sakit` varchar(255) NOT NULL,
@@ -1543,7 +1551,8 @@ CREATE TABLE `rumah_sakit` (
 
 LOCK TABLES `rumah_sakit` WRITE;
 /*!40000 ALTER TABLE `rumah_sakit` DISABLE KEYS */;
-INSERT INTO `rumah_sakit` (`id_rumah_sakit`, `nama_rumah_sakit`, `provinsi`, `kota`, `jalan`) VALUES (60,'RS Tbk Sibolga','Kepulauan Bangka Belitung','Lhokseumawe','Gg. Indragiri No. 6'),
+INSERT INTO `rumah_sakit` VALUES
+(60,'RS Tbk Sibolga','Kepulauan Bangka Belitung','Lhokseumawe','Gg. Indragiri No. 6'),
 (198,'RS (Persero) Tbk Pasuruan','Nusa Tenggara Barat','Surakarta','Gang Cihampelas No. 79'),
 (247,'RS (Persero) Tbk Mojokerto','Nusa Tenggara Barat','Padang Sidempuan','Gg. Kebonjati No. 578'),
 (267,'RS (Persero) Tbk Palembang','Kalimantan Timur','Cimahi','Gang Raya Ujungberung No. 56'),
@@ -1572,7 +1581,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `telepon_pengguna`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `telepon_pengguna` (
   `email` varchar(255) NOT NULL,
   `no_telepon` varchar(255) NOT NULL,
@@ -1588,7 +1597,8 @@ CREATE TABLE `telepon_pengguna` (
 
 LOCK TABLES `telepon_pengguna` WRITE;
 /*!40000 ALTER TABLE `telepon_pengguna` DISABLE KEYS */;
-INSERT INTO `telepon_pengguna` (`email`, `no_telepon`) VALUES ('adiarja64@example.org','+62 (0488) 776-1185'),
+INSERT INTO `telepon_pengguna` VALUES
+('adiarja64@example.org','+62 (0488) 776-1185'),
 ('akarsanairawan@example.org','+62 (0126) 424 3856'),
 ('akarsanairawan@example.org','+62 (041) 757 7617'),
 ('akarsanairawan@example.org','+62 (39) 298 1085'),
@@ -1897,7 +1907,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `telepon_rumah_sakit`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `telepon_rumah_sakit` (
   `id_rumah_sakit` int(11) NOT NULL,
   `no_telepon` varchar(255) NOT NULL,
@@ -1913,7 +1923,8 @@ CREATE TABLE `telepon_rumah_sakit` (
 
 LOCK TABLES `telepon_rumah_sakit` WRITE;
 /*!40000 ALTER TABLE `telepon_rumah_sakit` DISABLE KEYS */;
-INSERT INTO `telepon_rumah_sakit` (`id_rumah_sakit`, `no_telepon`) VALUES (60,'(053) 050-7005'),
+INSERT INTO `telepon_rumah_sakit` VALUES
+(60,'(053) 050-7005'),
 (198,'(0078) 581-7557'),
 (247,'+62 (069) 329 3359'),
 (267,'0863057869'),
@@ -1972,7 +1983,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `tenaga_medis`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tenaga_medis` (
   `email` varchar(255) NOT NULL,
   `nama_departemen` varchar(255) NOT NULL,
@@ -1993,7 +2004,8 @@ CREATE TABLE `tenaga_medis` (
 
 LOCK TABLES `tenaga_medis` WRITE;
 /*!40000 ALTER TABLE `tenaga_medis` DISABLE KEYS */;
-INSERT INTO `tenaga_medis` (`email`, `nama_departemen`, `id_rumah_sakit`, `NIKes`, `jenis_profesi`) VALUES ('adiarja64@example.org','Anak',879,'7705608782022','Perawat'),
+INSERT INTO `tenaga_medis` VALUES
+('adiarja64@example.org','Anak',879,'7705608782022','Perawat'),
 ('akarsanairawan@example.org','Kulit',766,'1781995750772','Perawat'),
 ('asirwanda75@example.com','Kulit',60,'2158204792806','Perawat'),
 ('asmuni43@example.net','Umum',698,'5401169512024','Perawat'),
@@ -2095,6 +2107,61 @@ INSERT INTO `tenaga_medis` (`email`, `nama_departemen`, `id_rumah_sakit`, `NIKes
 ('zalindra02@example.com','Anak',791,'7507595894494','Perawat');
 /*!40000 ALTER TABLE `tenaga_medis` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'Halobot'
+--
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `KurangiStokBerdasarkanResep` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `KurangiStokBerdasarkanResep`(
+    IN input_id_resep INT
+)
+BEGIN
+    DECLARE v_id_obat_item INT;
+    DECLARE v_kuantitas_item INT;
+    DECLARE done INT DEFAULT FALSE;
+
+    DECLARE cur_item_resep CURSOR FOR
+        SELECT ro.id_obat, ro.kuantitas
+        FROM resep_obat ro
+        WHERE ro.id_resep = input_id_resep;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    START TRANSACTION;
+
+    OPEN cur_item_resep;
+
+    item_loop: LOOP
+        FETCH cur_item_resep INTO v_id_obat_item, v_kuantitas_item;
+        IF done THEN
+            LEAVE item_loop;
+        END IF;
+
+        UPDATE obat
+        SET stok_obat = stok_obat - v_kuantitas_item
+        WHERE id_obat = v_id_obat_item;
+
+    END LOOP item_loop;
+
+    CLOSE cur_item_resep;
+
+    COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2105,4 +2172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-16 17:11:21
+-- Dump completed on 2025-05-31 14:48:14
